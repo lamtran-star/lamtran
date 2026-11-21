@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lộ trình triển khai · Base × Xanh Sẫm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+<style>:root{--bg:#f6f8fb;--panel:#ffffff;--soft:#f0f3f8;--line:#e2e7ef;--ink:#16202f;--muted:#5b6678;--brand:#1e88e5;--brand-s:#e3f0fc;--on-brand:#ffffff;--ev:#1e88e5;--ev-s:#e6f1fc;--po:#d97706;--po-s:#fdf1e1;--fd:#475569;--fd-s:#eef1f5;--app:#7c3aed;--app-s:#f2ecfe;--core:#0e9f6e;--core-s:#e4f6ee;--danger:#e11d48;--danger-s:#ffe4e6;--danger-ink:#be123c;--cyan:#0891b2;--overlay:rgba(7,10,16,0.97);--overlay-ink:#e8edf5;--zoom-hint:rgba(15,20,30,0.72);--font-sans:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--font-mono:ui-monospace,Menlo,Consolas,monospace;--top:58px;--shadow:0 1px 2px rgba(16,24,40,.05),0 6px 20px rgba(16,24,40,.05)}:root[data-theme="dark"]{--bg:#0d121c;--panel:#151c2a;--soft:#1b2436;--line:#26314a;--ink:#e7ecf4;--muted:#9aa6ba;--brand:#5aa9f0;--brand-s:#16263d;--on-brand:#ffffff;--ev:#5aa9f0;--ev-s:#152740;--po:#f0a23b;--po-s:#2d2212;--fd:#a3b1c6;--fd-s:#1d2535;--app:#a78bfa;--app-s:#241c3d;--core:#34d399;--core-s:#10291f;--danger-s:#4c0519;--danger-ink:#fda4af;--shadow:none}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d121c;--panel:#151c2a;--soft:#1b2436;--line:#26314a;--ink:#e7ecf4;--muted:#9aa6ba;--brand:#5aa9f0;--brand-s:#16263d;--on-brand:#ffffff;--ev:#5aa9f0;--ev-s:#152740;--po:#f0a23b;--po-s:#2d2212;--fd:#a3b1c6;--fd-s:#1d2535;--app:#a78bfa;--app-s:#241c3d;--core:#34d399;--core-s:#10291f;--danger-s:#4c0519;--danger-ink:#fda4af;--shadow:none}}</style>
+<style>.hb,.hb *{box-sizing:border-box}.hb{background:var(--bg);color:var(--ink);font:15px/1.62 var(--font-sans)}:where(.hb) a{color:var(--brand)}:where(.hb) h1{font-size:33px;line-height:1.2;margin:10px 0 10px;font-weight:800;letter-spacing:-.01em}:where(.hb) h2{font-size:23px;margin:46px 0 10px;padding-top:8px;display:flex;align-items:center;gap:12px;font-weight:800}:where(.hb) h3{margin:0;font-size:19px}.hb .h3{font-size:17px;margin:22px 0 8px}:where(.hb) h4{margin:0 0 6px;font-size:15px}:where(.hb) h5{margin:0 0 4px;font-size:13.5px;color:var(--brand)}:where(.hb) code{background:var(--soft);padding:1px 6px;border-radius:5px;font-size:12.5px;font-family:var(--font-mono)}:where(.hb):focus-visible{outline:2px solid var(--brand);outline-offset:2px}.top{position:sticky;top:0;z-index:50;height:var(--top);display:flex;align-items:center;gap:14px;padding:0 20px;background:color-mix(in srgb,var(--panel) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:8px;text-decoration:none}.brand img{height:22px;display:block}.brand .x{color:var(--muted);font-weight:700}.tdiv{width:1px;height:26px;background:var(--line)}.ttl{font-size:14px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ttl b{color:var(--ink)}.tools{margin-left:auto;display:flex;gap:8px;align-items:center}.zoomc{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}.zoomc button,.themeb{background:var(--panel);color:var(--ink);border:0;padding:6px 11px;font-family:inherit;font-size:14px;cursor:pointer}.zoomc button+button{border-left:1px solid var(--line)}.zval{min-width:54px}.themeb{border:1px solid var(--line);border-radius:10px}.zoomc button:hover,.themeb:hover{background:var(--soft)}.navtoggle{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:10px;width:36px;height:34px;font-size:16px;cursor:pointer}.navtoggle:hover{background:var(--soft)}nav.side{padding:18px 14px 40px;border-right:1px solid var(--line);overflow:auto}nav.side a{display:block;padding:5px 9px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:13.5px}nav.side a:hover{background:var(--soft)}nav.side a.act{background:var(--brand-s);color:var(--brand);font-weight:600}details.ng{border-bottom:1px solid var(--line);padding:4px 0}details.ng>summary{list-style:none;cursor:pointer;padding:8px;border-radius:8px;font-weight:700;font-size:13.5px;display:flex;align-items:center;gap:6px}details.ng>summary::-webkit-details-marker{display:none}details.ng>summary::before{content:"▸";color:var(--muted);font-size:11px;transition:transform .15s}details.ng[open]>summary::before{transform:rotate(90deg)}details.ng a{margin-left:10px}.req{color:var(--danger);font-weight:800;margin-left:3px}.hero{background:linear-gradient(135deg,var(--brand-s),var(--panel) 70%);border:1px solid var(--line);border-radius:20px;padding:26px 30px;margin-bottom:8px}.hero-logos{display:flex;align-items:center;gap:10px;margin-bottom:14px}.hero-logos img{height:30px}.hero-logos .x{color:var(--muted);font-weight:700;font-size:15px}.eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}.lead{color:var(--muted);max-width:880px;margin:0 0 12px;font-size:14.5px}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0 4px}.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:9px 13px}.kpi b{font-size:23px;display:block;line-height:1.2;font-variant-numeric:tabular-nums}.kpi span{color:var(--muted);font-size:12px}.sn{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--brand);color:var(--on-brand);font-size:15px;flex:0 0 auto}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 15px;box-shadow:var(--shadow)}.gow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0}.gow .card{box-shadow:none}.gow .goal{border-top:3px solid var(--brand)}.gow .output{border-top:3px solid var(--core)}.gow .how{border-top:3px solid var(--po)}.gow p,.gow ol,.gow ul{margin:0;font-size:13.5px}.gow ul{padding-left:16px}.rq{font-size:11px;padding:1px 8px;border-radius:99px;font-weight:700}.rq.req{background:var(--danger-s);color:var(--danger-ink)}.rq.opt{background:var(--soft);color:var(--muted)}.tscroll{overflow-x:auto}.extable{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}:where(.hb) table{border-collapse:collapse;width:100%;font-size:13px}:where(.hb) th,:where(.hb) td{border-bottom:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}:where(.hb) thead th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em}.note{background:var(--po-s);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:13.5px;margin-top:10px}.note ul{margin:0;padding-left:16px}.keep{margin:10px 0 0;font-size:12.5px;color:var(--core);background:var(--core-s);padding:7px 12px;border-radius:8px}.jbar{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:8px 0 4px}.jstep{position:relative;display:flex;flex-direction:column;gap:2px;padding:12px 10px 12px 26px;text-decoration:none;color:var(--on-brand);background:var(--brand);clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%,14px 50%);margin-right:-8px}.jstep:first-child{clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%);padding-left:14px}.jstep.mixed{background:var(--brand-s);color:var(--brand)}.jstep .jn{font-size:11px;font-weight:700;opacity:.85}.jstep .jt{font-weight:700;font-size:13.5px;line-height:1.25}.jstep .ja{font-size:11px;opacity:.9}@media (max-width:640px){.jbar{grid-template-columns:1fr;gap:6px}.jstep,.jstep:first-child{clip-path:none;margin:0;border-radius:10px;padding-left:12px}}.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:12px 0 6px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}.cal .cdow{font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--muted);text-align:center;padding:4px 0}.cal .cday{min-height:46px;border-radius:9px;padding:6px 7px;font-size:12.5px;background:var(--soft);color:var(--muted)}.cal .cday.blank{background:transparent}.cal .cday b{display:block;font-size:13px;color:var(--ink)}.cal .cday.hl{background:var(--brand);color:var(--on-brand)}.cal .cday.hl b{color:var(--on-brand)}.cal .cday.hl span{display:block;font-size:10.5px;font-weight:700;margin-top:2px}.tj{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0}.tj-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}.tj-head code{font-size:13px}.tj-head .store{font-size:12.5px;color:var(--muted)}.tj-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.tj-step{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:var(--soft)}.tj-step.done{background:var(--core-s);border-color:var(--core)}.tj-step.now{background:var(--brand-s);border-color:var(--brand)}.tj-step .tn{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}.tj-step.done .tn{color:var(--core)}.tj-step.now .tn{color:var(--brand)}.tj-step .tt{font-size:13px;font-weight:700;margin:3px 0 2px}.tj-step .tm{font-size:11px;color:var(--muted)}@media (max-width:860px){.tj-steps{grid-template-columns:1fr 1fr}}.kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}.kcol{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:9px}.kcol h5{font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);margin:0 0 8px;display:flex;justify-content:space-between}.kcard{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:8px 9px;margin-bottom:7px;font-size:12px}.kcard code{font-size:11px}.kcard .who{font-weight:700;font-size:12.5px;margin:3px 0 2px}.kcard .meta{color:var(--muted);font-size:11px}.kcard.late{background:var(--danger-s);border-color:var(--danger)}.kcard.late .late-badge{display:inline-block;background:var(--danger);color:#fff;font-size:10px;font-weight:800;padding:1px 7px;border-radius:99px;margin-bottom:4px}.kcard.done{background:var(--core-s);border-color:var(--core)}@media (max-width:860px){.kanban{grid-template-columns:1fr 1fr}}.kinds{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}.kind{background:var(--panel);border:1px solid var(--line);border-left:5px solid;border-radius:12px;padding:14px}.kind.ev{border-left-color:var(--ev)}.kind.po{border-left-color:var(--po)}.kind.nsk{border-left-color:var(--core)}.kind header{display:flex;align-items:center;gap:9px;margin-bottom:8px}.kind img{height:26px}.kind h4{margin:0;font-size:15.5px}.kind small{display:block;font-weight:500;color:var(--muted);font-size:11.5px}.kind p.role{font-size:13px;margin:0 0 8px;font-style:italic;color:var(--ink)}.kind ul{margin:0 0 8px;padding-left:16px;font-size:13px}.kind .out{font-size:12px;background:var(--soft);border-radius:8px;padding:6px 9px;color:var(--muted)}.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:8px;align-items:stretch;margin:8px 0 14px}.fstep{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px;position:relative}.fstep h4{margin:4px 0 2px;font-size:13.5px}.fstep p{margin:0;font-size:12px;color:var(--muted)}.fn{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--soft);font-weight:800;font-size:11px}.fstep.svc .fn{background:var(--brand);color:var(--on-brand)}.fstep.out .fn{background:var(--core);color:var(--on-brand)}.farrow{display:grid;place-items:center;font-size:18px;color:var(--muted)}@media (max-width:980px){.flow{grid-template-columns:1fr}.farrow{transform:rotate(90deg)}}.pain{display:grid;grid-template-columns:1fr auto 1.3fr auto 1fr;gap:10px;align-items:center;margin:14px 0}.pain-chips{display:flex;flex-direction:column;gap:6px}.pchip{display:flex;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:12.5px}.pchip b{font-weight:700}.pain-arrow{font-size:20px;color:var(--muted);text-align:center}.pain-mid{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px}.pain-mid .ptitle{font-size:11px;font-weight:800;color:var(--brand);text-transform:uppercase;margin-bottom:6px}.pain-mid .pline{font-size:12px;background:var(--soft);border-radius:8px;padding:4px 8px;margin-bottom:4px}.pain-q{background:var(--po-s);border:1px solid var(--line);border-radius:12px;padding:10px 12px}.pain-q .qline{font-size:12.5px;font-weight:700;color:var(--danger-ink);margin-bottom:4px}@media (max-width:980px){.pain{grid-template-columns:1fr;}.pain-arrow{transform:rotate(90deg)}}@media (max-width:980px){.gow,.kinds{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}:where(.hb) h1{font-size:25px}.hero{padding:18px 16px}.ttl{display:none}}html{scroll-padding-top:calc(var(--top) + 12px)}body{margin:0}.wrap{display:grid;grid-template-columns:230px minmax(0,1fr);max-width:1360px;margin:0 auto}nav.side{position:sticky;top:var(--top);align-self:start;height:calc(100vh - var(--top))}main{padding:26px 36px 80px;min-width:0}body.nav-off .wrap{grid-template-columns:minmax(0,1fr)}body.nav-off nav.side{display:none}@media (max-width:980px){.wrap{grid-template-columns:minmax(0,1fr)}nav.side{display:none}main{padding:16px 14px 50px}}</style>
+<style>nav.side{padding:22px 16px 40px;background:var(--panel);border-right:1px solid var(--line)}.nv-head{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0 10px 14px}.nv-grp{position:relative;margin-bottom:16px}.nv-ph{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;color:var(--ink);padding:0 10px 6px}.nv-ph i{font-style:normal;font-size:10.5px;font-weight:700;color:var(--brand);background:var(--brand-s);border-radius:6px;padding:2px 6px;letter-spacing:.04em}nav.side a{display:flex;align-items:center;gap:10px;margin:2px 0 2px 10px;padding:8px 10px;border-radius:10px;color:var(--muted);font-size:13.5px;line-height:1.35;text-decoration:none;border-left:0;position:relative;transition:background .15s,color .15s}nav.side a .nn{flex:0 0 22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;font-weight:700;background:var(--soft);color:var(--muted);border:1px solid var(--line)}nav.side a:hover{background:var(--soft);color:var(--ink)}nav.side a.act{background:var(--brand-s);color:var(--ink);font-weight:700}nav.side a.act .nn{background:var(--brand);border-color:var(--brand);color:#fff}nav.side a.act::before{content:"";position:absolute;left:-10px;top:8px;bottom:8px;width:3px;border-radius:3px;background:var(--brand)}.nv-next{margin:22px 4px 0;padding:14px;border-radius:14px;border:1px solid var(--line);background:linear-gradient(135deg,var(--brand-s),var(--panel) 75%)}.nv-next small{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--brand)}.nv-next b{display:block;font-size:15px;margin:4px 0 2px}.nv-next span{font-size:12.5px;color:var(--muted)}.brand img{height:24px}.hero-logos{gap:16px;margin-bottom:18px}.hero-logos img{height:40px}.kind header img{width:36px;height:36px;object-fit:contain;flex:0 0 36px}.pchip img.ch{width:20px;height:20px;border-radius:5px;object-fit:cover}.pchip span{color:var(--muted)}.kcard.live{border:2px solid var(--brand);box-shadow:0 0 0 4px var(--brand-s);position:relative;animation:pop .35s ease}.kcard.live.fin{border-color:var(--core);box-shadow:0 0 0 4px var(--core-s)}.live-tag{position:absolute;top:-9px;right:8px;background:var(--brand);color:#fff;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:1px 7px;border-radius:99px}.kcard.live.fin .live-tag{background:var(--core)}.mvbtn{margin-top:8px;width:100%;border:0;border-radius:8px;padding:7px 8px;font:600 12.5px var(--font-sans);background:var(--brand);color:#fff;cursor:pointer}.mvbtn:hover{filter:brightness(1.08)}.mvbtn:focus-visible{outline:2px solid var(--brand);outline-offset:2px}.kcard.live.fin .mvbtn{background:var(--soft);color:var(--ink);border:1px solid var(--line)}@keyframes pop{0%{transform:translateX(-24px);opacity:.2}100%{transform:none;opacity:1}}.tj-log{margin-top:10px;font-size:12.5px;color:var(--muted);display:grid;gap:3px}.tj-log div b{color:var(--ink)}.kcol h5 .cnt{font-variant-numeric:tabular-nums}.dsx{margin-top:14px;border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}.dsx-h{display:flex;align-items:center;gap:9px;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--soft);flex-wrap:wrap}.dsx-h img{width:22px;height:22px}.dsx-h b{font-size:13.5px}.dsx-h span{margin-left:auto;font-size:12px;color:var(--muted)}.dsx.got .dsx-h span{color:var(--core);font-weight:600}.dsx table{width:100%;border-collapse:collapse;font-size:12.5px}.dsx th{text-align:left;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:7px 12px;border-bottom:1px solid var(--line)}.dsx td{padding:7px 12px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}.dsx tr:last-child td{border-bottom:0}#dsxNew{display:none}.dsx.got #dsxNew{display:table-row;background:var(--core-s);animation:rowin .6s ease}@keyframes rowin{0%{opacity:0;transform:translateY(-6px)}100%{opacity:1;transform:none}}.sla{font-size:11px;font-weight:700;padding:1px 8px;border-radius:99px}.sla.ok{background:var(--core-s);color:var(--core)}.sla.bad{background:var(--danger-s);color:var(--danger-ink)}.tj-step:last-child .tn{color:var(--core)}.tj-steps{display:flex;gap:0;grid-template-columns:none}.tj-step{flex:1;border:0;border-radius:0;background:var(--soft);padding:11px 18px 11px 30px;margin-left:-10px;min-width:0;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%);transition:filter .15s,transform .15s}.tj-step:first-child{margin-left:0;padding-left:16px;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%);border-radius:10px 0 0 10px}.tj-step:last-child{clip-path:polygon(0 0,100% 0,100% 100%,0 100%,16px 50%);border-radius:0 10px 10px 0}.tj-step.done{background:var(--core-s)}.tj-step.now{background:var(--brand)}.tj-step.now .tn,.tj-step.now .tt,.tj-step.now .tm{color:#fff}.tj-step.next{cursor:pointer;background:var(--brand-s)}.tj-step.next .tn{color:var(--brand)}.tj-step.next:hover{filter:brightness(1.06);transform:translateY(-1px)}.tj-step.next:focus-visible{outline:2px solid var(--brand);outline-offset:2px}.tj-step.lock{cursor:not-allowed}.tj-hint{margin-top:8px;font-size:12.5px;color:var(--muted);min-height:18px}.tj-hint.warn{color:var(--danger-ink)}@media (max-width:860px){.tj-steps{flex-wrap:wrap}.tj-step{flex:1 1 45%;margin:0 0 6px;clip-path:none;border-radius:10px}}.wrap{grid-template-columns:268px minmax(0,1fr)}nav.side{padding:22px 14px 40px}nav.side a{margin:2px 0;padding:8px 10px 8px 12px;white-space:nowrap}nav.side a .nl{overflow:hidden;text-overflow:ellipsis}nav.side a.act::before{left:0;top:9px;bottom:9px}.nv-ph{padding:0 4px 6px}.nv-head{padding:0 4px 14px}.nv-next{margin:20px 0 0}@media (max-width:980px){.wrap{grid-template-columns:minmax(0,1fr)}}.cday.tent{background:var(--soft);border:1px dashed var(--line)}.cday.tent span{color:var(--muted)}.pchip.wide{justify-content:flex-start}.pchip-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.pain-mid .pline.warn{background:var(--danger-s);color:var(--danger-ink);font-weight:600}.pains4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 6px}.p4{background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--danger);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow)}.p4 .pn{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:7px;background:var(--danger-s);color:var(--danger-ink);font-size:12px;font-weight:800}.p4 h4{font-size:14px;margin:8px 0 4px;line-height:1.35}.p4 p{font-size:12.5px;color:var(--muted);margin:0}.cats{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.cat{display:inline-flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:6px 14px 6px 6px;font-size:13.5px;font-weight:600}.cat i{font-style:normal;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--brand-s);color:var(--brand);font-size:11.5px;font-weight:800}@media (max-width:1100px){.pains4{grid-template-columns:1fr 1fr}}@media (max-width:640px){.pains4{grid-template-columns:1fr}}.gow .card .who{font-size:12.5px;color:var(--muted);margin:0 0 6px}.cur3{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr) 28px minmax(0,1fr);gap:8px;align-items:stretch;margin:16px 0 6px}.c3{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;min-width:0}.c3-h{display:flex;align-items:center;gap:10px}.c3-h i{font-style:normal;flex:0 0 28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--brand-s);color:var(--brand);font-weight:800;font-size:13px}.c3-h b{display:block;font-size:14.5px;line-height:1.3}.c3-h small{display:block;font-size:12px;color:var(--muted)}.c3.q{border-top:3px solid var(--danger)}.c3.q .c3-h i{background:var(--danger);color:#fff}.c3.q .c3-h small{color:var(--danger-ink)}.ch-row{display:flex;align-items:center;gap:10px;background:var(--soft);border-radius:10px;padding:8px 10px}.ch-row img.ci{width:26px;height:26px;border-radius:7px;flex:0 0 26px;object-fit:cover}.ch-row b{display:block;font-size:13.5px}.ch-row small{display:block;font-size:12px;color:var(--muted)}.nicks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.nicks span{text-align:center;font-size:12px;font-weight:600;white-space:nowrap;border:1px dashed var(--line);border-radius:8px;padding:5px 4px;color:var(--ink)}.c3-l{list-style:none;margin:0;padding:0;display:grid;gap:6px}.c3-l li{font-size:13px;background:var(--soft);border-radius:9px;padding:7px 10px;line-height:1.4}.c3-l li.bad{background:var(--danger-s);color:var(--danger-ink);font-weight:600}.c3.q .c3-l li{background:var(--danger-s);color:var(--danger-ink);font-weight:600}.c3-ar{display:grid;place-items:center;color:var(--muted);font-size:20px}@media (max-width:1100px){.cur3{grid-template-columns:minmax(0,1fr)}.c3-ar{transform:rotate(90deg);height:20px}}.usp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 18px}.usp-i{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:14px;background:linear-gradient(135deg,var(--brand-s),var(--panel) 80%);border:1px solid var(--line);border-left:4px solid var(--brand)}.usp-i.auto{background:linear-gradient(135deg,var(--core-s),var(--panel) 80%);border-left-color:var(--core)}.usp-ic{flex:0 0 32px;height:32px;border-radius:9px;display:grid;place-items:center;background:var(--brand);color:#fff;font-weight:800;font-size:15px}.usp-i.auto .usp-ic{background:var(--core)}.usp-i b{display:block;font-size:15.5px;margin:4px 0 4px}.usp-i p{margin:0;font-size:13.5px;color:var(--muted)}.farrow{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}.farrow small{font-size:10.5px;font-weight:700;color:var(--core);white-space:nowrap;letter-spacing:.02em}@media (max-width:980px){.usp{grid-template-columns:1fr}}</style>
+</head>
+<body class="hb">
+<header class="top">
+<button type="button" class="navtoggle" aria-label="Ẩn / hiện menu">☰</button>
+<a class="brand" href="#"><img class="" src="assets/base.png" alt="Base.vn"><span class="x">×</span><img class="" src="assets/xanhsam.png" alt="Xanh Sẫm"></a><span class="tdiv"></span>
+<span class="ttl">Lộ trình triển khai · <b>Base × Xanh Sẫm</b></span>
+<div class="tools">
+<div class="zoomc" role="group" aria-label="Thu phóng trang"><button type="button" data-z="-1" aria-label="Thu nhỏ">−</button><button type="button" class="zval" data-z="0">100%</button><button type="button" data-z="1" aria-label="Phóng to">+</button></div>
+<button type="button" class="themeb" aria-label="Đổi giao diện sáng/tối">◐</button>
+</div>
+</header>
+<div class="wrap">
+<nav class="side" aria-label="Mục lục">
+<div class="nv-head">Nội dung tài liệu</div>
+<div class="nv-grp">
+<div class="nv-ph"><i>01</i>Hiện trạng</div>
+<a href="#hien-trang" class="act"><span class="nn">1</span><span class="nl">Nỗi đau hiện tại</span></a>
+</div>
+<div class="nv-grp">
+<div class="nv-ph"><i>02</i>Giải pháp</div>
+<a href="#giai-phap"><span class="nn">2</span><span class="nl">Giải pháp của Base</span></a>
+<a href="#demo-bpm"><span class="nn">3</span><span class="nl">Phiếu khiếu nại</span></a>
+</div>
+<div class="nv-grp">
+<div class="nv-ph"><i>03</i>Triển khai</div>
+<a href="#lo-trinh"><span class="nn">4</span><span class="nl">Lộ trình 3 buổi</span></a>
+<a href="#dieu-kien"><span class="nn">5</span><span class="nl">Cần chuẩn bị</span></a>
+</div>
+<div class="nv-next">
+<small>Buổi gần nhất</small>
+<b>Thứ 2, 23/11/2026</b>
+<span>Buổi 1 · Trình bày giải pháp</span>
+</div>
+</nav>
+<main>
+<div class="hero">
+<div class="hero-logos"><img class="" src="assets/base.png" alt="Base.vn"><span class="x">×</span><img class="" src="assets/xanhsam.png" alt="Xanh Sẫm"></div>
+<div class="eyebrow">Prospect · BPM · Dataset</div>
+<h1>Lộ trình triển khai<br>Base × Xanh Sẫm</h1>
+<p class="lead"><b>Mục tiêu: không bỏ sót tin nhắn khiếu nại nào, luôn biết khiếu nại đang xử lý đến đâu.</b> Hiện khách nhắn qua 1 Fanpage và 6 nick Zalo, việc theo dõi dựa vào một file Excel ghi tay. <b>Prospect → BPM → Dataset</b> đưa tin nhắn, tiến độ xử lý và dữ liệu về một hệ thống.</p>
+<div class="kpis">
+<div class="kpi"><b>3</b><span>buổi triển khai</span></div>
+<div class="kpi"><b>7</b><span>kênh chat (1 Fanpage + 6 Zalo)</span></div>
+<div class="kpi"><b>2h</b><span>SLA xử lý khiếu nại</span></div>
+<div class="kpi"><b>6</b><span>loại khiếu nại</span></div>
+</div>
+</div>
+<h2 id="hien-trang"><span class="sn">1</span>Hiện trạng: khiếu nại đang được xử lý như thế nào</h2>
+<p>Khách nhắn tin khiếu nại qua <b>1 Fanpage</b> và <b>6 nick Zalo</b>. Nhân viên trả lời trên từng kênh riêng lẻ, rồi ghi tay vào một file Excel để theo dõi đơn nào cần xử lý, đang ở giai đoạn nào.</p>
+<div class="cur3">
+<div class="c3">
+<div class="c3-h"><i>1</i><div><b>Khách nhắn đến</b><small>Mỗi kênh trả lời một nơi</small></div></div>
+<div class="ch-row"><img class="ci" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3CclipPath id='c'%3E%3Ccircle cx='12' cy='12' r='12'/%3E%3C/clipPath%3E%3C/defs%3E%3Ccircle cx='12' cy='12' r='12' fill='%230866FF'/%3E%3Cpath clip-path='url(%23c)' fill='%23fff' d='M16.67 15.47l.53-3.47h-3.33V9.75c0-.95.47-1.88 1.95-1.88h1.51V4.92s-1.37-.23-2.68-.23c-2.74 0-4.53 1.66-4.53 4.66V12H7.08v3.47h3.04V24h3.75v-8.53z'/%3E%3C/svg%3E" alt="Facebook"><div><b>Facebook</b><small>Fanpage</small></div></div>
+<div class="ch-row"><img class="ci" src="assets/zalo.png" alt="Zalo"><div><b>Zalo</b><small>Zalo cá nhân</small></div></div>
+</div>
+<div class="c3-ar" aria-hidden="true">→</div>
+<div class="c3">
+<div class="c3-h"><i>2</i><div><b>Nhân viên ghi tay</b><small>Một file Excel chung</small></div></div>
+<ul class="c3-l"><li>Đơn cần xử lý, đang ở giai đoạn nào</li><li>Nhân viên tự nhớ, tự ghi chú</li><li class="bad">Không ghi thì không ai biết</li></ul>
+</div>
+<div class="c3-ar" aria-hidden="true">→</div>
+<div class="c3 q">
+<div class="c3-h"><i>?</i><div><b>Quản lý không trả lời được</b><small>Vì không có số liệu</small></div></div>
+<ul class="c3-l"><li>Nhân viên đã trả lời khách chưa?</li><li>Tin nào còn chưa đọc?</li><li>Có khách nào bị bỏ sót không?</li></ul>
+</div>
+</div>
+<div class="pains4">
+<div class="p4"><span class="pn">1</span><h4>Không biết nhân viên có trả lời hay không</h4><p>Không có công cụ nào cho thấy tin nhắn của khách đã được trả lời hay bị bỏ đó.</p></div>
+<div class="p4"><span class="pn">2</span><h4>Không kiểm soát được tin đã đọc, chưa đọc</h4><p>7 kênh nằm trên 7 nơi khác nhau, quản lý không nhìn được tổng thể.</p></div>
+<div class="p4"><span class="pn">3</span><h4>Không biết có bỏ sót khách hàng không</h4><p>Khách nhắn mà không ai xử lý thì cũng không ai phát hiện.</p></div>
+<div class="p4"><span class="pn">4</span><h4>Theo dõi bằng Excel rất thủ công</h4><p>Tiến độ xử lý phụ thuộc vào việc nhân viên có ghi vào file hay không.</p></div>
+</div>
+<h3 class="h3">6 loại khiếu nại Xanh Sẫm đang phân loại</h3>
+<div class="cats">
+<span class="cat"><i>1</i>Ship muộn</span>
+<span class="cat"><i>2</i>Ship thiếu/sai hàng</span>
+<span class="cat"><i>3</i>Đổi hàng</span>
+<span class="cat"><i>4</i>Sản phẩm thối hỏng</span>
+<span class="cat"><i>5</i>Thái độ nhân viên</span>
+<span class="cat"><i>6</i>Sản phẩm có dị vật</span>
+</div>
+<p class="keep">6 loại này được đưa nguyên vào phiếu khiếu nại trên BPM và bảng thống kê trên Dataset.</p>
+<h2 id="giai-phap"><span class="sn">2</span>Base giải quyết bài toán này thế nào</h2>
+<div class="usp">
+<div class="usp-i"><span class="usp-ic">✓</span><div><b>Mọi thao tác trên cùng một hệ thống Base</b><p>Nhắn tin với khách, theo dõi xử lý khiếu nại, lưu dữ liệu và xem báo cáo đều làm trên Base. Không còn chuyển qua lại giữa Facebook, Zalo và file Excel.</p></div></div>
+<div class="usp-i auto"><span class="usp-ic">⚡</span><div><b>Các bước nối với nhau tự động</b><p>Tin nhắn Facebook, Zalo tự về một hộp thư. Chuyển hội thoại sang "Khách khiếu nại" là phiếu tự tạo, kèm thông tin khách và link hội thoại. Xử lý xong, dữ liệu tự lưu và báo cáo tự cập nhật.</p></div></div>
+</div>
+<div class="flow">
+<div class="fstep"><span class="fn">1</span><h4>Khách nhắn tin</h4><p>Qua Facebook và Zalo</p></div>
+<div class="farrow">→<small>tự về hộp thư</small></div>
+<div class="fstep svc"><span class="fn">2</span><h4>Prospect</h4><p>Nhắn tin, trao đổi với khách</p></div>
+<div class="farrow">→<small>tự tạo phiếu</small></div>
+<div class="fstep svc"><span class="fn">3</span><h4>BPM</h4><p>Quản lý tiến độ xử lý</p></div>
+<div class="farrow">→<small>tự lưu dữ liệu</small></div>
+<div class="fstep out"><span class="fn">4</span><h4>Dataset</h4><p>Lưu dữ liệu, làm báo cáo</p></div>
+</div>
+<div class="kinds">
+<div class="kind ev">
+<header><img class="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cdefs%3E%3ClinearGradient id='g0' x1='0' y1='0' x2='16' y2='16' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%2359a4e0'/%3E%3Cstop offset='0.5' stop-color='%230B79D2'/%3E%3Cstop offset='1' stop-color='%23085593'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='url(%23g0)'%3E%3Cpath d='M9 0a7 7 0 0 1 7 7v2a7 7 0 0 1-7 7H5v-3h3a5 5 0 1 0-5-5v8H0V7a7 7 0 0 1 7-7z'/%3E%3Cpath d='M8 5a3 3 0 0 1 0 6H5V8a3 3 0 0 1 3-3'/%3E%3C/g%3E%3C/svg%3E" alt="Prospect"><div><h4>Prospect</h4><small>Nhắn tin với khách hàng</small></div></header>
+<p class="role">Nơi nhân viên nhắn tin, trao đổi với khách hàng.</p>
+<ul><li>Tin nhắn từ Fanpage và 6 nick Zalo về chung một màn hình</li><li>Thấy rõ tin nào chưa đọc, chưa trả lời, ai đang phụ trách</li><li>Tin nhắn khiếu nại được tạo thành phiếu khiếu nại</li></ul>
+<div class="out">→ Biết nhân viên đã trả lời chưa, không bỏ sót khách</div>
+</div>
+<div class="kind po">
+<header><img class="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cdefs%3E%3ClinearGradient id='g0' x1='0' y1='0' x2='16' y2='16' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%2359a4e0'/%3E%3Cstop offset='0.5' stop-color='%230B79D2'/%3E%3Cstop offset='1' stop-color='%23085593'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='url(%23g0)'%3E%3Cpath d='M11.5 0a4.5 4.5 0 1 1 0 9c-.703 0-1.182-.162-1.63-.45-.5-.322-.471-1.043-.138-1.537A4.47 4.47 0 0 0 10.5 4.5c0-.931-.283-1.796-.768-2.514C9.4 1.492 9.37.771 9.871.45 10.318.16 10.797 0 11.5 0'/%3E%3Cpath d='M14.013 9.732c.494-.333 1.215-.363 1.538.138.287.448.449.927.449 1.63a4.5 4.5 0 1 1-9 0c0-.703.161-1.182.449-1.63.322-.5 1.043-.471 1.537-.138a4.5 4.5 0 0 0 2.514.768 4.47 4.47 0 0 0 2.513-.768'/%3E%3Cpath d='M4.5 7c.703 0 1.182.161 1.63.449.5.322.471 1.043.138 1.537A4.5 4.5 0 0 0 5.5 11.5c0 .931.283 1.796.768 2.513.333.494.363 1.215-.138 1.538-.448.287-.927.449-1.63.449a4.5 4.5 0 1 1 0-9'/%3E%3Cpath d='M4.5 0A4.5 4.5 0 0 1 9 4.5c0 .703-.162 1.182-.45 1.63-.322.5-1.043.471-1.537.138A4.47 4.47 0 0 0 4.5 5.5c-.931 0-1.796.283-2.514.768C1.492 6.6.771 6.63.45 6.129.16 5.682 0 5.203 0 4.5A4.5 4.5 0 0 1 4.5 0'/%3E%3C/g%3E%3C/svg%3E" alt="BPM"><div><h4>BPM</h4><small>Quản lý tiến độ xử lý</small></div></header>
+<p class="role">Nơi quản lý tiến độ: biết đơn hàng khiếu nại đã được xử lý hay chưa, đang ở giai đoạn nào.</p>
+<ul><li>Mỗi đơn hàng khiếu nại là một phiếu, có người phụ trách</li><li>Biết đơn đã xử lý xong hay chưa, đang ở giai đoạn nào, ai đang phụ trách</li><li>Đơn quá hạn 2 giờ được báo đỏ</li></ul>
+<div class="out">→ Biết ngay đơn hàng khiếu nại đã xử lý đến đâu</div>
+</div>
+<div class="kind nsk">
+<header><img class="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cdefs%3E%3ClinearGradient id='g0' x1='0' y1='0' x2='16' y2='16' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%2359a4e0'/%3E%3Cstop offset='0.5' stop-color='%230B79D2'/%3E%3Cstop offset='1' stop-color='%23085593'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='url(%23g0)'%3E%3Cpath d='M16 11v2c0 1.4-3.6 3-8 3s-8-1.6-8-3v-2c2 1 5.1 2 8 2s6-1 8-2m0-5v2c0 1-3.6 3-8 3S0 9 0 8V6c2 1 5 2 8 2s6-1 8-2M8 0C5 0 0 1 0 3s5.9 3 8 3 8-1 8-3-5-3-8-3'/%3E%3C/g%3E%3C/svg%3E" alt="Dataset"><div><h4>Dataset</h4><small>Lưu dữ liệu và báo cáo</small></div></header>
+<p class="role">Thay thế file Excel: nơi lưu dữ liệu khiếu nại và làm báo cáo để theo dõi.</p>
+<ul><li>Phiếu xử lý xong tự lưu vào bảng, không cần nhập tay vào Excel</li><li>Tra cứu lại lịch sử khiếu nại của từng khách</li><li>Báo cáo theo dõi: số khiếu nại, giá trị đơn bị khiếu nại, thống kê theo loại khiếu nại, cửa hàng, thời gian</li></ul>
+<div class="out">→ Bỏ được file Excel, có báo cáo để theo dõi và cải thiện</div>
+</div>
+</div>
+<h2 id="demo-bpm"><span class="sn">3</span>Quy trình xử lý khiếu nại trên BPM</h2>
+<p>Mỗi khiếu nại là một phiếu: đi qua 4 bước, mỗi bước có người giữ và hạn xử lý, xong là tự ghi vào Dataset. Bấm mũi tên để xem phiếu chạy.</p>
+<div class="tj">
+<div class="tj-head"><code>KN-2026-0119</code><span class="store">· Trần Minh Châu · Cơ sở Times City · Sản phẩm thối hỏng</span></div>
+<div class="tj-steps" id="tjSteps" role="list"></div>
+<div class="tj-hint" id="tjHint"></div>
+<div class="tj-log" id="tjLog"></div>
+<div class="dsx" id="dsx">
+<div class="dsx-h"><img class="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cdefs%3E%3ClinearGradient id='g0' x1='0' y1='0' x2='16' y2='16' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%2359a4e0'/%3E%3Cstop offset='0.5' stop-color='%230B79D2'/%3E%3Cstop offset='1' stop-color='%23085593'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='url(%23g0)'%3E%3Cpath d='M16 11v2c0 1.4-3.6 3-8 3s-8-1.6-8-3v-2c2 1 5.1 2 8 2s6-1 8-2m0-5v2c0 1-3.6 3-8 3S0 9 0 8V6c2 1 5 2 8 2s6-1 8-2M8 0C5 0 0 1 0 3s5.9 3 8 3 8-1 8-3-5-3-8-3'/%3E%3C/g%3E%3C/svg%3E" alt="Dataset"><b>Dataset · Thống kê khiếu nại</b><span id="dsxNote">Dòng mới sẽ tự xuất hiện khi phiếu hoàn tất</span></div>
+<div class="tscroll"><table>
+<thead><tr><th>Mã phiếu</th><th>Cửa hàng</th><th>Kênh</th><th>Loại khiếu nại</th><th>Thời gian xử lý</th><th>SLA 2h</th></tr></thead>
+<tbody id="dsxBody">
+<tr><td><code>KN-2026-0101</code></td><td>Nguyên Hồng</td><td>Zalo</td><td>Đổi hàng</td><td>1h05m</td><td><span class="sla ok">Đạt</span></td></tr>
+<tr><td><code>KN-2026-0102</code></td><td>Symphony</td><td>Fanpage</td><td>Ship thiếu/sai hàng</td><td>2h40m</td><td><span class="sla bad">Trễ</span></td></tr>
+<tr id="dsxNew"><td><code>KN-2026-0119</code></td><td>Times City</td><td>Fanpage</td><td>Sản phẩm thối hỏng</td><td>1h17m</td><td><span class="sla ok">Đạt</span></td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="kanban" id="kb">
+<div class="kcol" data-col="0"><h5>Tiếp nhận &amp; lập kế hoạch <span class="cnt"></span></h5>
+<div class="kcard"><code>KN-2026-0130</code><div class="who">Hoàng Minh Tuấn</div><div class="meta">Ship thiếu/sai hàng · Nguyên Hồng · còn 1h40</div></div>
+<div class="kcard late"><span class="late-badge">TRỄ 2H10M</span><code>KN-2026-0107</code><div class="who">Đỗ Khánh Linh</div><div class="meta">Sản phẩm thối hỏng · Hàm Nghi</div></div>
+</div>
+<div class="kcol" data-col="1"><h5>Xử lý với cửa hàng <span class="cnt"></span></h5>
+<div class="kcard"><code>KN-2026-0115</code><div class="who">Bùi Thanh Tâm</div><div class="meta">Thái độ nhân viên · Symphony · còn 40m</div></div>
+<div class="kcard late"><span class="late-badge">TRỄ 2H35M</span><code>KN-2026-0113</code><div class="who">Trần Quốc Hưng</div><div class="meta">Sản phẩm có dị vật · Times City</div></div>
+</div>
+<div class="kcol" data-col="2"><h5>Phản hồi khách hàng <span class="cnt"></span></h5>
+<div class="kcard late"><span class="late-badge">TRỄ 2H6M</span><code>KN-2026-0106</code><div class="who">Vương Gia Hân</div><div class="meta">Ship muộn · Nguyên Hồng</div></div>
+</div>
+<div class="kcol" data-col="3"><h5>Completed <span class="cnt"></span></h5>
+<div class="kcard done"><code>KN-2026-0101</code><div class="who">Nguyễn Hương Giang</div><div class="meta">✓ Đổi hàng · đã ghi vào Dataset</div></div>
+<div class="kcard done"><code>KN-2026-0102</code><div class="who">Hoàng Kim Oanh</div><div class="meta">✓ Ship thiếu/sai hàng · đã ghi vào Dataset</div></div>
+</div>
+<div class="kcard live" id="live">
+<span class="live-tag">Phiếu mẫu</span>
+<code>KN-2026-0119</code><div class="who">Trần Minh Châu</div>
+<div class="meta" id="liveMeta"></div>
+<button type="button" class="mvbtn" id="mvBtn"></button>
+</div>
+</div>
+<div class="note"><b>Phiếu trễ hạn tự báo đỏ</b> ngay trên danh sách — quản lý không cần hỏi "ai đang xử lý", nhìn bảng là biết phải can thiệp phiếu nào trước.</div>
+<h2 id="lo-trinh"><span class="sn">4</span>Lộ trình triển khai — 3 buổi</h2>
+<div class="jbar">
+<a class="jstep" href="#b1"><span class="jn">BUỔI 1</span><span class="jt">Trình bày giải pháp</span><span class="ja">Thứ 2, 23/11/2026</span></a>
+<a class="jstep mixed" href="#b2"><span class="jn">BUỔI 2</span><span class="jt">Đào tạo thiết lập</span><span class="ja">Chốt ngày tại Buổi 1</span></a>
+<a class="jstep mixed" href="#b3"><span class="jn">BUỔI 3</span><span class="jt">Đào tạo HDSD</span><span class="ja">Chốt ngày tại Buổi 1</span></a>
+</div>
+<div class="cal">
+<div class="cdow">CN</div><div class="cdow">T2</div><div class="cdow">T3</div><div class="cdow">T4</div><div class="cdow">T5</div><div class="cdow">T6</div><div class="cdow">T7</div><div class="cday"><b>1</b></div><div class="cday"><b>2</b></div><div class="cday"><b>3</b></div><div class="cday"><b>4</b></div><div class="cday"><b>5</b></div><div class="cday"><b>6</b></div><div class="cday"><b>7</b></div><div class="cday"><b>8</b></div><div class="cday"><b>9</b></div><div class="cday"><b>10</b></div><div class="cday"><b>11</b></div><div class="cday"><b>12</b></div><div class="cday"><b>13</b></div><div class="cday"><b>14</b></div><div class="cday"><b>15</b></div><div class="cday"><b>16</b></div><div class="cday"><b>17</b></div><div class="cday"><b>18</b></div><div class="cday"><b>19</b></div><div class="cday"><b>20</b></div><div class="cday"><b>21</b></div><div class="cday"><b>22</b></div><div class="cday hl"><b>23</b><span>Buổi 1</span></div><div class="cday tent"><b>24</b></div><div class="cday tent"><b>25</b></div><div class="cday tent"><b>26</b></div><div class="cday tent"><b>27</b></div><div class="cday"><b>28</b></div><div class="cday"><b>29</b></div><div class="cday"><b>30</b></div>
+</div>
+<p class="keep">Sau Buổi 1, Xanh Sẫm chuẩn bị tài khoản Zalo và nội dung tin nhắn mẫu. Ngày Buổi 2 và Buổi 3 chốt cùng Xanh Sẫm tại Buổi 1.</p>
+<div class="gow">
+<div class="card goal" id="b1"><h4>Buổi 1 · Trình bày giải pháp</h4><p class="who">Thứ 2, 23/11 · Ban lãnh đạo, CSKH, quản lý các cửa hàng</p><ul><li>Trình bày giải pháp: gom tin nhắn về một chỗ, chuyển khiếu nại thành phiếu, báo cáo tự động</li><li>Chạy thử trên hệ thống: chuyển hội thoại sang Khách khiếu nại, phiếu tự tạo, số liệu lên báo cáo</li><li>Chốt các bước xử lý, người phụ trách, 6 loại khiếu nại; giao việc chuẩn bị tài khoản Zalo và tin nhắn mẫu</li></ul></div>
+<div class="card output" id="b2"><h4>Buổi 2 · Đào tạo thiết lập</h4><p class="who">Chốt ngày tại Buổi 1 · Admin / người quản trị hệ thống</p><ul><li>Prospect: nối Fanpage và 6 nick Zalo, trả lời mẫu</li><li>BPM: sửa bước, người giữ, SLA, trường thông tin</li><li>Dataset: bảng thống kê và dashboard</li></ul></div>
+<div class="card how" id="b3"><h4>Buổi 3 · Đào tạo HDSD</h4><p class="who">Chốt ngày tại Buổi 1 · CSKH, quản lý các cửa hàng</p><ul><li>CSKH: nhận chat, theo dõi phiếu khiếu nại</li><li>Cửa hàng: xử lý và chuyển bước phiếu</li><li>Quản lý: xem bảng phiếu, phiếu trễ, dashboard</li></ul></div>
+</div>
+<h2 id="dieu-kien"><span class="sn">5</span>Xanh Sẫm cần chuẩn bị</h2>
+<div class="extable tscroll">
+<table>
+<thead><tr><th>Đầu việc</th><th>Để làm gì</th><th>Cần trước</th></tr></thead>
+<tbody>
+<tr><td>Danh sách tài khoản sử dụng · <a href="https://docs.google.com/spreadsheets/d/1Kkb0yJd2ntwoqb07FxtZyVRUbXHvkNFkuzS7JP8lglw/edit" target="_blank" rel="noopener">mở file ↗</a></td><td>Tạo tài khoản, phân quyền cho từng người</td><td><span class="rq req">Buổi 1</span></td></tr>
+<tr><td>Phiếu khảo sát xử lý khiếu nại · <a href="https://docs.google.com/spreadsheets/d/12F0tUKpuD2vIB1IgYDcdKKSwWy8bOqm1rj5YJu1nuPk/edit" target="_blank" rel="noopener">mở file ↗</a></td><td>Xác nhận hiện trạng, điền người phụ trách từng bước</td><td><span class="rq req">Buổi 1</span></td></tr>
+<tr><td>Người có quyền quyết định quy trình dự buổi</td><td>Chốt được ngay tại buổi, không treo lại</td><td><span class="rq req">Buổi 1</span></td></tr>
+<tr><td>Tài khoản 6 nick Zalo (người đăng nhập, điện thoại nhận mã) và quyền quản trị Fanpage</td><td>Nối 7 kênh chat vào Prospect</td><td><span class="rq req">Buổi 2</span></td></tr>
+<tr><td>Nội dung tin nhắn mẫu: lời chào, hỏi sản phẩm quan tâm, tin ngoài giờ, câu trả lời khiếu nại thường gặp</td><td>Cài trả lời mẫu và tin nhắn tự động đúng giọng Xanh Sẫm</td><td><span class="rq req">Buổi 2</span></td></tr>
+<tr><td>Người được giao làm admin hệ thống</td><td>Học thiết lập để tự chỉnh về sau</td><td><span class="rq req">Buổi 2</span></td></tr>
+</tbody>
+</table>
+</div>
+</main>
+</div>
+<script>
+(function () {
+var root = document.documentElement, z = 100, zv = document.querySelector('.zval');
+document.querySelectorAll('.zoomc button').forEach(function (b) {
+b.addEventListener('click', function () {
+var d = +b.dataset.z; z = d === 0 ? 100 : Math.min(150, Math.max(70, z + d * 10));
+document.body.style.zoom = z + '%'; zv.textContent = z + '%';
+});
+});
+document.querySelector('.themeb').addEventListener('click', function () {
+var dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+root.dataset.theme = dark ? 'light' : 'dark';
+});
+var ST=[
+{n:'Tiếp nhận & lập kế hoạch',who:'CSKH trực Prospect',tm:'09:14',log:'CSKH chuyển hội thoại sang Khách khiếu nại, phiếu tự tạo',meta:'Sản phẩm thối hỏng · Times City · còn 2h00',btn:'Chuyển sang: Xử lý với cửa hàng →'},
+{n:'Xử lý với cửa hàng',who:'Quản lý CH Times City',tm:'09:40',log:'Cửa hàng xác nhận giao sai lô, chuẩn bị đổi hàng',meta:'Đang xử lý tại Times City · còn 1h34',btn:'Chuyển sang: Phản hồi khách hàng →'},
+{n:'Phản hồi khách hàng',who:'CSKH trực Prospect',tm:'10:25',log:'CSKH nhắn lại khách qua Fanpage, khách đồng ý đổi hàng',meta:'Chờ khách xác nhận · còn 49m',btn:'Hoàn tất phiếu ✓'},
+{n:'Hoàn tất · Ghi vào Dataset',who:'Hệ thống tự động',tm:'10:31',log:'Đóng phiếu sau 1h17m (đạt SLA 2h) · <b>BPM tự ghi 1 dòng vào Dataset</b>, không ai phải nhập tay',meta:'✓ Sản phẩm thối hỏng · đã ghi vào Dataset',btn:'↺ Chạy lại từ đầu'}
+];
+var cur=0, live=document.getElementById('live');
+if(live){
+function render(){
+var cols=document.querySelectorAll('#kb .kcol');
+cols[cur].insertBefore(live, cols[cur].children[1]||null);
+live.classList.toggle('fin',cur===3);
+live.style.animation='none'; void live.offsetWidth; live.style.animation='';
+document.getElementById('liveMeta').textContent=ST[cur].meta;
+document.getElementById('mvBtn').textContent=ST[cur].btn;
+cols.forEach(function(c){c.querySelector('.cnt').textContent=c.querySelectorAll('.kcard').length;});
+var h='';
+ST.forEach(function(s,i){
+var cls=i<cur||cur===3?'done':(i===cur?'now':(i===cur+1?'next':'lock'));
+var tn=i<cur||cur===3?'✓ Bước '+(i+1):(i===cur?'● Đang ở đây':(i===cur+1?'Bấm để chuyển ›':'Bước '+(i+1)));
+if(i===3) tn=(cur===3?'✓ ':'')+'Bước 4 · Tự động';
+var tm=i<=cur?s.tm+(s.who?' · '+s.who:''):(i===3?'Đóng phiếu là tự ghi vào Dataset':'Chưa tới');
+h+='<div class="tj-step '+cls+'" data-i="'+i+'" role="listitem"'+(cls==='next'?' tabindex="0"':'')+'><div class="tn">'+tn+'</div><div class="tt">'+s.n+'</div><div class="tm">'+tm+'</div></div>';
+});
+document.getElementById('tjSteps').innerHTML=h;
+var l='';
+for(var i=0;i<=cur;i++) l+='<div><b>'+ST[i].tm+'</b> · '+ST[i].log+'</div>';
+document.getElementById('tjLog').innerHTML=l;
+var ds=document.getElementById('dsx'); ds.classList.toggle('got',cur===3);
+document.getElementById('dsxNote').textContent=cur===3?'✓ Vừa tự ghi phiếu KN-2026-0119 lúc 10:31':'Dòng mới sẽ tự xuất hiện khi phiếu hoàn tất';
+}
+var hint=document.getElementById('tjHint');
+function go(){cur=cur===3?0:cur+1;hint.className='tj-hint';hint.textContent=cur===3?'Phiếu đã hoàn tất. Bấm nút trên phiếu để chạy lại từ đầu.':'Đã chuyển sang: '+ST[cur].n;render();}
+document.getElementById('mvBtn').addEventListener('click',go);
+var box=document.getElementById('tjSteps');
+box.addEventListener('click',function(e){
+var el=e.target.closest('.tj-step'); if(!el) return;
+var i=+el.dataset.i;
+if(i===cur+1) go();
+else if(i>cur+1){hint.className='tj-hint warn';hint.textContent='Không nhảy cóc được: phiếu phải xong bước "'+ST[cur].n+'" trước.';}
+});
+box.addEventListener('keydown',function(e){ if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('next')){e.preventDefault();go();} });
+render();
+}
+document.querySelector('.navtoggle').addEventListener('click', function () { document.body.classList.toggle('nav-off'); });
+var links = [].slice.call(document.querySelectorAll('nav.side a[href^="#"]'));
+var io = new IntersectionObserver(function (es) {
+es.forEach(function (e) { if (e.isIntersecting) { links.forEach(function (a) { a.classList.toggle('act', a.getAttribute('href') === '#' + e.target.id); }); } });
+}, { rootMargin: '-70px 0px -70% 0px' });
+document.querySelectorAll('main h2[id]').forEach(function (h) { io.observe(h); });
+})();
+</script>
+</body>
+</html>
